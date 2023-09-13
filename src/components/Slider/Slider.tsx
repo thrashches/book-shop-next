@@ -23,13 +23,7 @@ export default function Slider() {
 
     useEffect(() => {
         timeoutRef.current = setTimeout(() => {
-            if (index === items.length - 1) {
-                setIndex(0);
-            } else {
-                setIndex(index + 1);
-            }
-            console.log(index);
-
+            setIndex(index === items.length - 1 ? 0 : index + 1);
         }, 3000);
         return () => {
             resetTimeout();
