@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6b542e3-5810-4453-9467-4b02255bc6b7" name="Changes" comment="" />
+    <list default="true" id="a6b542e3-5810-4453-9467-4b02255bc6b7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/Home.module.scss" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,9 +32,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2Ugt3bBTQL0fEL0Red6KAkc3Bno" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,7 +53,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "fileTemplates",
-    "ts.external.directory.path": "/Users/thrashches/Documents/Development/skill_factory/book-shop-next/node_modules/typescript/lib",
+    "ts.external.directory.path": "C:\\Users\\ches\\Documents\\Development\\book-shop-next\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -80,6 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693372853018</updated>
       <workItem from="1693372854049" duration="46550000" />
+      <workItem from="1694608302952" duration="1142000" />
     </task>
     <servers />
   </component>
