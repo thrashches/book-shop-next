@@ -1,6 +1,6 @@
 'use client';
 import styles from "./Slider.module.scss";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import First from "../../../public/slider/1.png";
 import Second from "../../../public/slider/2.png";
@@ -14,7 +14,27 @@ export default function Slider() {
         Third,
     ];
     const [index, setIndex] = useState(0);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const resetTimeout = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    };
 
+    useEffect(() => {
+        timeoutRef.current = setTimeout(() => {
+            if (index === items.length - 1) {
+                setIndex(0);
+            } else {
+                setIndex(index + 1);
+            }
+            console.log(index);
+
+        }, 3000);
+        return () => {
+            resetTimeout();
+        };
+    }, [index, items.length]);
 
     return (
         <section className={styles.Slider}>
