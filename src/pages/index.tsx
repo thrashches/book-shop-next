@@ -5,10 +5,13 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
 import {books} from "@/data/mockData";
+import {booksApi, useGetBooksBySubjectQuery} from "@/api/booksApi";
 
 const inter = Inter({subsets: ['latin']});
 
 export default function Home() {
+    const {books, error, isLoading} = useGetBooksBySubjectQuery();
+
     return (
         <>
             <Head>

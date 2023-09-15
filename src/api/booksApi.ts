@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {IBook} from "@/data/types";
 
 
@@ -19,5 +19,7 @@ export const booksApi = createApi({
         }),
     }),
 });
+
+export const {useGetBooksBySubjectQuery} = booksApi;
 
 // https://redux-toolkit.js.org/rtk-query/overview
