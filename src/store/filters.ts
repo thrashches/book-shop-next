@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import exp from "constants";
 
 
 interface IFilter {
@@ -11,7 +10,7 @@ interface IFilter {
 const initialState: IFilter = {
     category: '',
     startIndex: 0,
-    maxResults: 20
+    maxResults: 6
 };
 
 const filterSlice = createSlice({
