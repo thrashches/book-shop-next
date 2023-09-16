@@ -1,16 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 
-interface IFilter {
+export interface IFilterState {
     category: string,
     startIndex: number,
-    maxResults: number,
 }
 
-const initialState: IFilter = {
+const initialState: IFilterState = {
     category: '',
     startIndex: 0,
-    maxResults: 6
 };
 
 const filterSlice = createSlice({
@@ -22,9 +20,6 @@ const filterSlice = createSlice({
         },
         setStartIndex: (state, action) => {
             state.startIndex = action.payload;
-        },
-        setMaxResults: (state, action) => {
-            state.maxResults = action.payload;
         },
     }
 });

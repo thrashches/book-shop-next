@@ -3,17 +3,16 @@ import {IBook} from "@/data/types";
 
 
 export const booksApi = createApi({
-    reducerPath: "books",
+    reducerPath: "booksApi",
     baseQuery: fetchBaseQuery({
         baseUrl: "/api/books"
     }),
     endpoints: (builder) => ({
-        getBooksBySubject: builder.query<IBook[], {subject: string, pageIndex: number, maxResults: number}>({
-            query({subject, pageIndex, maxResults}): string {
+        getBooksBySubject: builder.query<IBook[], { subject: string, pageIndex: number }>({
+            query({subject, pageIndex}): string {
                 const params = new URLSearchParams();
-                params.append("q", `"subject:${subject}"`);
-                params.append("startIndex", pageIndex.toString());
-                params.append("maxResults", maxResults.toString());
+                params.append("subject", `"subject:${subject}"`);
+                params.append("pageIndex", pageIndex.toString());
                 return `?${params.toString()}`
             }
         }),

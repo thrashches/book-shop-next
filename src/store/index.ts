@@ -1,8 +1,10 @@
 /// <reference types="redux-persist" />
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import filterSlice from "@/store/filters";
+import booksSlice from "@/store/books";
 import storage from "redux-persist/lib/storage";
 import {persistReducer, persistStore} from "redux-persist";
+import {booksApi} from "@/api/booksApi";
 
 
 const persistConfig = {
@@ -12,6 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     filter: filterSlice,
+    books: booksSlice,
+    booksApi: booksApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -20,7 +24,7 @@ const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,
-    }),
+    }).concat(booksApi.middleware),
 });
 
 export const persistor = persistStore(store);

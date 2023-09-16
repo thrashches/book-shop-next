@@ -1,4 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
+import {IBook, IAPIResponse} from "@/data/types";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,12 +20,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else {
         gbooksReqParams.set('startIndex', pageIndex.toString());
     }
+    gbooksReqParams.set('maxResults', '6');
 
 
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?${gbooksReqParams.toString()}`)
 
-    const booksData = await response.json();
-    res.status(200).send({
-        data: booksData,
-    })
+    const booksData: IAPIResponse = await response.json();
+    res.status(200).send(
+        booksData.items
+    )
 }

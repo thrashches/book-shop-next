@@ -19,3 +19,7 @@ export interface IBook {
         };
     };
 }
+
+export interface IAPIResponse {
+    items: IBook[];
+}

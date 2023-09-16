@@ -68,8 +68,5 @@ export default function Books(props: BooksProps) {
         <div className={styles.book__list}>
         {books.map(book => <Book key={book.id} book={book}/>)}
     </div>
-    <div className={styles.loadMore}>
-        <button className={styles.btn} style={{width: "100%"}}>Load more</button>
-    </div>
     </section>;
 }

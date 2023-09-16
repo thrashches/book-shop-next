@@ -4,13 +4,28 @@ import styles from '@/styles/Home.module.scss';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
-import {books} from "@/data/mockData";
 import {booksApi, useGetBooksBySubjectQuery} from "@/api/booksApi";
+import React, {useEffect, useState} from "react";
+import {IBook} from "@/data/types";
+import {GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType} from "next";
 
 const inter = Inter({subsets: ['latin']});
 
-export default function Home() {
-    const {books, error, isLoading} = useGetBooksBySubjectQuery();
+export const getServerSideProps = (async (params: {subject: string}) => {
+    const urlParams = new URLSearchParams();
+    urlParams.append("subject", `"subject:${params.subject}"`);
+    urlParams.append("pageIndex", "0");
+    urlParams.append("maxResults", "6");
+    const response = await fetch("https://www.googleapis.com/books/v1/volumes?q=subject:Architecture&startIndex=0&maxResults=6");
+    const data: {items: IBook[]} = await response.json();
+    return {
+        props: {data: data.items}
+    }
+})
+
+export default function Home({data}: InferGetServerSidePropsType<GetServerSideProps>) {
+    const [pageIndex, setPageIndex] = useState(0);
+
 
     return (
         <>
@@ -24,7 +39,11 @@ export default function Home() {
                 <Slider/>
                 <section className={styles.books}>
                     <Sidebar/>
-                    <Books books={books}/>
+
+                    {data ? <Books books={data}/>:<div className={styles.noContent}>No items found...</div>}
+                    <div className={styles.btnWrapper}>
+                        <button className={styles.btn} style={{width: "100%"}}>Load more</button>
+                    </div>
                 </section>
             </main>
         </>
