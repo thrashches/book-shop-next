@@ -4,7 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {IFilterState} from "@/store/filters";
 
 
-export default function Sidebar () {
+type SidebarProps = {
+    currentCategory: string,
+}
+
+export default function Sidebar (props: SidebarProps) {
+    const {currentCategory} = props;
     const sidebarItems = [
         'Architecture',
         'Art & Fashion',
@@ -22,16 +27,15 @@ export default function Sidebar () {
         'Science',
         'Technology',
         'Travel & Maps',
-    ]
-    const selectedCategory = useSelector((state: IFilterState) => state.category)
-    const dispatch = useDispatch();
+    ];
+
 
     return <aside className={styles.sidebar}>
         <ul className={styles.sidebar__links} id="sidebar" data-category="Architecture">
             {sidebarItems.map((item: string, index: number) => (
                 <li
                     key={index}
-                    className={`${styles.sidebar__link} ${selectedCategory === item && styles.sidebar__link__active}`}
+                    className={`${styles.sidebar__link} ${currentCategory === item && styles.sidebar__link__active}`}
                 >
                     <Link href={`?subject=${item}`}>{item}</Link>
                 </li>

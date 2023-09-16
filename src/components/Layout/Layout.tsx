@@ -1,7 +1,13 @@
 import Head from "next/head";
 import {PropsWithChildren} from "react";
 import Navbar from "@/components/Navbar/Navbar";
+import {Montserrat} from "next/font/google";
 
+
+const font = Montserrat({
+    weight: ["400"],
+    subsets: ["latin", "cyrillic"],
+});
 
 export default function Layout({children}: PropsWithChildren) {
     return <>
@@ -11,7 +17,7 @@ export default function Layout({children}: PropsWithChildren) {
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <link rel="icon" href="/favicon.ico"/>
         </Head>
-        <div>
+        <div className={font.className}>
             <header>
                 <Navbar/>
             </header>

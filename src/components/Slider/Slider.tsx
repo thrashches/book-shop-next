@@ -1,4 +1,3 @@
-'use client';
 import styles from "./Slider.module.scss";
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";

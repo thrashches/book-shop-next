@@ -2,6 +2,7 @@ import styles from "./Books.module.scss";
 import {IBook} from "@/data/types";
 import Image from "next/image";
 import React from "react";
+import {noImageSrc} from "@/data/constants";
 
 
 type BooksProps = {
@@ -36,7 +37,18 @@ const Book = ({book}: { book: IBook }) => {
     return (
         <div className={styles.book}>
             <div className={styles.book__poster}>
-                <Image src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} width={212} height={295}/>
+                {
+                    book.volumeInfo.imageLinks ?
+                        <Image
+                            src={book.volumeInfo.imageLinks.thumbnail}
+                            alt={book.volumeInfo.title} width={212} height={295}
+                        /> :
+                        <Image
+                            src={noImageSrc}
+                            alt={"No picture"} width={212} height={212}
+                        />
+                }
+
             </div>
             <div className={styles.book__details}>
                 <div className={styles.book__author}>{book.volumeInfo.authors}</div>

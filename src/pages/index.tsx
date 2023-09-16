@@ -4,10 +4,11 @@ import styles from '@/styles/Home.module.scss';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
-import {booksApi, useGetBooksBySubjectQuery} from "@/api/booksApi";
+import {useLazyGetBooksBySubjectQuery} from "@/api/booksApi";
 import React, {useEffect, useState} from "react";
 import {IBook} from "@/data/types";
-import {GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType} from "next";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
+import Loader from "@/components/Loader/Loader";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -21,13 +22,30 @@ export const getServerSideProps = (async (params: {query: {subject: string|null}
     const data: {items: IBook[]} = await response.json();
 
     return {
-        props: {data: data.items}
+        props: {
+            data: data.items,
+            subject: subject,
+        }
     }
 })
 
-export default function Home({data}: InferGetServerSidePropsType<GetServerSideProps>) {
-    const [pageIndex, setPageIndex] = useState(0);
+export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
+    const [nextPageIndex, setNextPageIndex] = useState(6);
+    const [books, setBooks] = useState<IBook[]>(data);
+    const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery();
+    const [loading, setLoading] = useState(false);
 
+    const handleLoadMore = () => {
+        setLoading(true);
+        trigger({subject: subject, pageIndex: nextPageIndex});
+        setNextPageIndex(nextPageIndex + 6);
+    };
+    useEffect(() => {
+        setLoading(false);
+        if (result.isSuccess) {
+            setBooks([...books, ...result.data]);
+        }
+    }, [result]);
 
     return (
         <>
@@ -40,11 +58,16 @@ export default function Home({data}: InferGetServerSidePropsType<GetServerSidePr
             <main className={styles.main}>
                 <Slider/>
                 <section className={styles.books}>
-                    <Sidebar/>
+                    <Sidebar currentCategory={subject}/>
 
-                    {data ? <Books books={data}/>:<div className={styles.noContent}>No items found...</div>}
+                    {data ? <Books books={books}/>:<div className={styles.noContent}>No items found...</div>}
                     <div className={styles.btnWrapper}>
-                        <button className={styles.btn} style={{width: "100%"}}>Load more</button>
+                        {loading&&<Loader/>}
+                        <button
+                            className={styles.btn}
+                            style={{width: "100%"}}
+                            onClick={handleLoadMore}
+                        >Load more</button>
                     </div>
                 </section>
             </main>

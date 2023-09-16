@@ -19,6 +19,6 @@ export const booksApi = createApi({
     }),
 });
 
-export const {useGetBooksBySubjectQuery} = booksApi;
+export const {useGetBooksBySubjectQuery, useLazyGetBooksBySubjectQuery} = booksApi;
 
 // https://redux-toolkit.js.org/rtk-query/overview
