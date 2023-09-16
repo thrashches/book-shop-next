@@ -33,7 +33,7 @@ export default function Sidebar () {
                     key={index}
                     className={`${styles.sidebar__link} ${selectedCategory === item && styles.sidebar__link__active}`}
                 >
-                    <Link href={`/category/${item}`}>{item}</Link>
+                    <Link href={`?subject=${item}`}>{item}</Link>
                 </li>
             ))}
         </ul>

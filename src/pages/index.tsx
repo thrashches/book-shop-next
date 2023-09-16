@@ -11,13 +11,15 @@ import {GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGe
 
 const inter = Inter({subsets: ['latin']});
 
-export const getServerSideProps = (async (params: {subject: string}) => {
+export const getServerSideProps = (async (params: {query: {subject: string|null}}) => {
     const urlParams = new URLSearchParams();
-    urlParams.append("subject", `"subject:${params.subject}"`);
+    const subject = params.query.subject?params.query.subject:"Architecture";
+    urlParams.append("q", `"subject:${subject}"`);
     urlParams.append("pageIndex", "0");
     urlParams.append("maxResults", "6");
-    const response = await fetch("https://www.googleapis.com/books/v1/volumes?q=subject:Architecture&startIndex=0&maxResults=6");
+    const response = await fetch("https://www.googleapis.com/books/v1/volumes?" + urlParams.toString());
     const data: {items: IBook[]} = await response.json();
+
     return {
         props: {data: data.items}
     }
