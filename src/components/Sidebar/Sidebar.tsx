@@ -29,7 +29,6 @@ export default function Sidebar (props: SidebarProps) {
         'Travel & Maps',
     ];
 
-
     return <aside className={styles.sidebar}>
         <ul className={styles.sidebar__links} id="sidebar" data-category="Architecture">
             {sidebarItems.map((item: string, index: number) => (
@@ -37,7 +36,7 @@ export default function Sidebar (props: SidebarProps) {
                     key={index}
                     className={`${styles.sidebar__link} ${currentCategory === item && styles.sidebar__link__active}`}
                 >
-                    <Link href={`?subject=${item}`}>{item}</Link>
+                    <Link href={`?${new URLSearchParams({subject: item}).toString()}`}>{item}</Link>
                 </li>
             ))}
         </ul>

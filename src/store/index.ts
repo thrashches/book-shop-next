@@ -2,6 +2,7 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import filterSlice from "@/store/filters";
 import booksSlice from "@/store/books";
+import profileSlice from "@/store/profile";
 import storage from "redux-persist/lib/storage";
 import {persistReducer, persistStore} from "redux-persist";
 import {booksApi} from "@/api/booksApi";
@@ -15,6 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     filter: filterSlice,
     books: booksSlice,
+    profile: profileSlice,
     booksApi: booksApi.reducer,
 });
 
@@ -29,3 +31,4 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 export default store;
+export type RootState = ReturnType<typeof store.getState>;

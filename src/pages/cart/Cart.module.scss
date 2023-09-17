@@ -44,3 +44,20 @@
   @include btn;
   padding: 18px 74px;
 }
+
+.empty {
+  color: var(--text-gray, #5C6A79);
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.center {
+  min-height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

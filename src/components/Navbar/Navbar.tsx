@@ -24,8 +24,8 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className={styles.Navbar__profile}>
-                    <button className={styles.profile__btn + " " + styles.profile__btn__user}></button>
-                    <button className={styles.profile__btn + " " + styles.profile__btn__search}></button>
+                    <Link href={"/login"} className={styles.profile__btn + " " + styles.profile__btn__user}></Link>
+                    <Link href={"#"} className={styles.profile__btn + " " + styles.profile__btn__search}></Link>
                     <Link href={"/cart"} className={styles.profile__btn + " " + styles.profile__btn__basket}>
                         <div className={styles.basket__items} id="basketItems"></div>
                     </Link>

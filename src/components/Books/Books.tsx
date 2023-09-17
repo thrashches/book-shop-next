@@ -3,6 +3,7 @@ import {IBook} from "@/data/types";
 import Image from "next/image";
 import React from "react";
 import {noImageSrc} from "@/data/constants";
+import {useDispatch} from "react-redux";
 
 
 type BooksProps = {
@@ -12,10 +13,11 @@ type BooksProps = {
 type BuyBtnProps = {
     saleAbility: boolean,
     isInCart: boolean,
+    handleBuy: () => void,
 }
 
 const BuyBtn = (props: BuyBtnProps) => {
-    const {saleAbility, isInCart} = props;
+    const {saleAbility, isInCart, handleBuy} = props;
 
     if (saleAbility && !isInCart) {
         return (
@@ -23,7 +25,7 @@ const BuyBtn = (props: BuyBtnProps) => {
         );
     } else if (!saleAbility && !isInCart) {
         return (
-            <button className={styles.btn} disabled>Buy now</button>
+            <button className={styles.btn} disabled onClick={handleBuy}>Buy now</button>
         );
     } else if (isInCart) {
         return (
@@ -34,6 +36,11 @@ const BuyBtn = (props: BuyBtnProps) => {
 
 
 const Book = ({book}: { book: IBook }) => {
+    const dispatch = useDispatch();
+    const handleBuy = () => {
+        dispatch(set)
+    }
+
     return (
         <div className={styles.book}>
             <div className={styles.book__poster}>
@@ -67,7 +74,7 @@ const Book = ({book}: { book: IBook }) => {
                 <div className={styles.book__price}>
                     {book.saleInfo.listPrice?.amount ?? "NOT FOR SALE"} {book.saleInfo.listPrice?.currencyCode}
                 </div>
-                <BuyBtn saleAbility={book.saleInfo.saleability === "FOR_SALE"} isInCart={false}/>
+                <BuyBtn saleAbility={book.saleInfo.saleability === "FOR_SALE"} isInCart={false} handleBuy={handleBuy}/>
             </div>
         </div>
     );
