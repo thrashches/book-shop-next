@@ -41,8 +41,11 @@ const profileSlice = createSlice({
         setCart(state, action) {
             state.cart = action.payload;
         },
+        addToCart(state, action) {
+            state.cart.push(action.payload);
+        }
     },
 })
 
 export default profileSlice.reducer;
-export const {setToken, setUser, setCart} = profileSlice.actions;
+export const {setToken, setUser, setCart, addToCart} = profileSlice.actions;

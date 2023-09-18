@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import {noImageSrc} from "@/data/constants";
 import {useDispatch} from "react-redux";
+import {addToCart} from "@/store/profile";
 
 
 type BooksProps = {
@@ -21,11 +22,11 @@ const BuyBtn = (props: BuyBtnProps) => {
 
     if (saleAbility && !isInCart) {
         return (
-            <button className={styles.btn}>Buy now</button>
+            <button className={styles.btn} onClick={handleBuy}>Buy now</button>
         );
     } else if (!saleAbility && !isInCart) {
         return (
-            <button className={styles.btn} disabled onClick={handleBuy}>Buy now</button>
+            <button className={styles.btn} disabled>Buy now</button>
         );
     } else if (isInCart) {
         return (
@@ -38,7 +39,8 @@ const BuyBtn = (props: BuyBtnProps) => {
 const Book = ({book}: { book: IBook }) => {
     const dispatch = useDispatch();
     const handleBuy = () => {
-        dispatch(set)
+        console.log(book);
+        dispatch(addToCart({book: book, quantity: 1}));
     }
 
     return (
