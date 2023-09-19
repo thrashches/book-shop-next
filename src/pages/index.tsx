@@ -7,9 +7,9 @@ import Books from "@/components/Books/Books";
 import {useLazyGetBooksBySubjectQuery} from "@/api/booksApi";
 import React, {useEffect, useState} from "react";
 import {IBook} from "@/data/types";
-import {GetServerSideProps, InferGetServerSidePropsType} from "next";
+import {GetServerSideProps, GetStaticProps, InferGetStaticPropsType, InferGetServerSidePropsType} from "next";
 import Loader from "@/components/Loader/Loader";
-import {onlyUnique} from "@/data/utils";
+import {removeDuplicates} from "@/data/utils";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -21,10 +21,9 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
     urlParams.append("maxResults", "6");
     const response = await fetch("https://www.googleapis.com/books/v1/volumes?" + urlParams.toString());
     const data: { items: IBook[] } = await response.json();
-
     return {
         props: {
-            data: data.items,
+            data: removeDuplicates(data.items),
             subject: subject,
         }
     }
@@ -32,7 +31,7 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
 
 export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
     const [nextPageIndex, setNextPageIndex] = useState(6);
-    const [books, setBooks] = useState<IBook[]>(data);
+    const [books, setBooks] = useState(data);
     const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery();
     const [loading, setLoading] = useState(false);
     const [canLoadMore, setCanLoadMore] = useState(true);
@@ -42,13 +41,14 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
         trigger({subject: subject, pageIndex: nextPageIndex});
         setNextPageIndex(nextPageIndex + 6);
     };
+
     useEffect(() => {
-        setLoading(false);
         if (result.isSuccess && result.data) {
-            const allBooks = [...data, ...result.data.items];
-            const uniqueBookIds = new Set([...allBooks.map(book => book.id)]);
-            setBooks(allBooks.filter());
+            console.log(result.data);
+            setBooks(removeDuplicates([...books, ...result.data]));
+            setCanLoadMore(true);
         }
+        setLoading(false);
     }, [result]);
 
     return (
@@ -64,7 +64,7 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
                 <section className={styles.books}>
                     <Sidebar currentCategory={subject}/>
 
-                    {data ? <Books books={books}/> : <div className={styles.noContent}>No items found...</div>}
+                    {books ? <Books books={books}/> : <div className={styles.noContent}>No items found...</div>}
                     {canLoadMore ?
                         <div className={styles.btnWrapper}>
                             {loading && <Loader/>}
@@ -75,7 +75,7 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
                             >Load more
                             </button>
                         </div>
-                        :<></>
+                        : <></>
                     }
                 </section>
             </main>

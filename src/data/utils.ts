@@ -1,3 +1,11 @@
-export function onlyUnique(value: any, index: number, array: Array<any>) {
-    return array.indexOf(value) === index;
+import {IBook} from "@/data/types";
+
+export function removeDuplicates(books: IBook[]): IBook[] {
+    const uniqueBooks: Map<string, IBook> = new Map();
+
+    for (const book of books) {
+        uniqueBooks.set(book.id, book);
+    }
+
+    return Array.from(uniqueBooks.values());
 }
