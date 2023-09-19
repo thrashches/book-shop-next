@@ -9,17 +9,18 @@ import React, {useEffect, useState} from "react";
 import {IBook} from "@/data/types";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import Loader from "@/components/Loader/Loader";
+import {onlyUnique} from "@/data/utils";
 
 const inter = Inter({subsets: ['latin']});
 
-export const getServerSideProps = (async (params: {query: {subject: string|null}}) => {
+export const getServerSideProps = (async (params: { query: { subject: string | null } }) => {
     const urlParams = new URLSearchParams();
-    const subject = params.query.subject?params.query.subject:"Architecture";
+    const subject = params.query.subject ? params.query.subject : "Architecture";
     urlParams.append("q", `"subject:${subject}"`);
     urlParams.append("pageIndex", "0");
     urlParams.append("maxResults", "6");
     const response = await fetch("https://www.googleapis.com/books/v1/volumes?" + urlParams.toString());
-    const data: {items: IBook[]} = await response.json();
+    const data: { items: IBook[] } = await response.json();
 
     return {
         props: {
@@ -34,6 +35,7 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
     const [books, setBooks] = useState<IBook[]>(data);
     const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery();
     const [loading, setLoading] = useState(false);
+    const [canLoadMore, setCanLoadMore] = useState(true);
 
     const handleLoadMore = () => {
         setLoading(true);
@@ -42,8 +44,10 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
     };
     useEffect(() => {
         setLoading(false);
-        if (result.isSuccess) {
-            setBooks([...books, ...result.data]);
+        if (result.isSuccess && result.data) {
+            const allBooks = [...data, ...result.data.items];
+            const uniqueBookIds = new Set([...allBooks.map(book => book.id)]);
+            setBooks(allBooks.filter());
         }
     }, [result]);
 
@@ -60,15 +64,19 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
                 <section className={styles.books}>
                     <Sidebar currentCategory={subject}/>
 
-                    {data ? <Books books={books}/>:<div className={styles.noContent}>No items found...</div>}
-                    <div className={styles.btnWrapper}>
-                        {loading&&<Loader/>}
-                        <button
-                            className={styles.btn}
-                            style={{width: "100%"}}
-                            onClick={handleLoadMore}
-                        >Load more</button>
-                    </div>
+                    {data ? <Books books={books}/> : <div className={styles.noContent}>No items found...</div>}
+                    {canLoadMore ?
+                        <div className={styles.btnWrapper}>
+                            {loading && <Loader/>}
+                            <button
+                                className={styles.btn}
+                                style={{width: "100%"}}
+                                onClick={handleLoadMore}
+                            >Load more
+                            </button>
+                        </div>
+                        :<></>
+                    }
                 </section>
             </main>
         </>

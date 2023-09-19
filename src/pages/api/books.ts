@@ -26,7 +26,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?${gbooksReqParams.toString()}`)
 
     const booksData: IAPIResponse = await response.json();
-    res.status(200).send(
-        booksData.items
-    )
+    if (!response.ok) {
+        res.status(400).send({error: true, message: "Something went wrong"});
+    } else {
+        res.status(200).send(
+            booksData.items
+        )
+    }
+
 }
