@@ -36,7 +36,10 @@ export default function Sidebar (props: SidebarProps) {
                     key={index}
                     className={`${styles.sidebar__link} ${currentCategory === item && styles.sidebar__link__active}`}
                 >
-                    <Link href={`?${new URLSearchParams({subject: item}).toString()}`}>{item}</Link>
+                    <Link
+                        href={`?${new URLSearchParams({subject: item}).toString()}`}
+                        scroll={true}
+                    >{item}</Link>
                 </li>
             ))}
         </ul>

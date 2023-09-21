@@ -31,7 +31,7 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
 
 export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
     const [nextPageIndex, setNextPageIndex] = useState(6);
-    const [books, setBooks] = useState(data);
+    const [books, setBooks] = useState<IBook[]>([]);
     const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery();
     const [loading, setLoading] = useState(false);
     const [canLoadMore, setCanLoadMore] = useState(true);
@@ -43,10 +43,17 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
     };
 
     useEffect(() => {
+        setBooks([])
+    }, [subject]);
+
+    useEffect(() => {
         if (result.isSuccess && result.data) {
             console.log(result.data);
+            if ([...data, ...result.data].length < 6) {
+                setCanLoadMore(false);
+                console.log("foo")
+            }
             setBooks(removeDuplicates([...books, ...result.data]));
-            setCanLoadMore(true);
         }
         setLoading(false);
     }, [result]);
@@ -64,7 +71,7 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
                 <section className={styles.books}>
                     <Sidebar currentCategory={subject}/>
 
-                    {books ? <Books books={books}/> : <div className={styles.noContent}>No items found...</div>}
+                    {books ? <Books books={[...data, ...books]}/> : <div className={styles.noContent}>No items found...</div>}
                     {canLoadMore ?
                         <div className={styles.btnWrapper}>
                             {loading && <Loader/>}
