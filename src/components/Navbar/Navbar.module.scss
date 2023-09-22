@@ -76,7 +76,7 @@
 }
 
 .basket__items {
-  display: none;
+  display: flex;
   @include center;
   align-items: center;
   position: absolute;

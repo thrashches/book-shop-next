@@ -1,4 +1,5 @@
 import {IBook} from "@/data/types";
+import {ICartItem} from "@/store/profile";
 
 export function removeDuplicates(books: IBook[]): IBook[] {
     const uniqueBooks: Map<string, IBook> = new Map();
@@ -8,4 +9,10 @@ export function removeDuplicates(books: IBook[]): IBook[] {
     }
 
     return Array.from(uniqueBooks.values());
+}
+
+export function getTotalPrice(items: ICartItem[]): number {
+    return items.reduce(
+        (acc, item) => acc + item.book.saleInfo.listPrice!.amount * item.quantity, 0
+    );
 }

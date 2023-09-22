@@ -1,7 +1,5 @@
 import Link from "next/link";
 import styles from "./Sidebar.module.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {IFilterState} from "@/store/filters";
 
 
 type SidebarProps = {

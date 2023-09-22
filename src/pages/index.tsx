@@ -4,12 +4,19 @@ import styles from '@/styles/Home.module.scss';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
-import {useLazyGetBooksBySubjectQuery} from "@/api/booksApi";
+import {
+    booksApi,
+    GetBooksBySubjectQueryResult,
+    useLazyGetBooksBySubjectQuery
+} from "@/api/booksApi";
 import React, {useEffect, useState} from "react";
 import {IBook} from "@/data/types";
-import {GetServerSideProps, GetStaticProps, InferGetStaticPropsType, InferGetServerSidePropsType} from "next";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import Loader from "@/components/Loader/Loader";
 import {removeDuplicates} from "@/data/utils";
+import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {AnimatePresence, motion} from "framer-motion";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -30,9 +37,11 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
 })
 
 export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
+    const route = useRouter().asPath;
     const [nextPageIndex, setNextPageIndex] = useState(6);
     const [books, setBooks] = useState<IBook[]>([]);
-    const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery();
+    const [trigger, result, lastPromiseInfo] = useLazyGetBooksBySubjectQuery<GetBooksBySubjectQueryResult>();
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [canLoadMore, setCanLoadMore] = useState(true);
 
@@ -43,18 +52,19 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
     };
 
     useEffect(() => {
-        setBooks([])
-    }, [subject]);
+        setBooks([]);
+        setNextPageIndex(6);
+        setCanLoadMore(true);
+        dispatch(booksApi.util?.resetApiState());
+    }, [route]);
 
     useEffect(() => {
         if (result.isSuccess && result.data) {
-            console.log(result.data);
-            if ([...data, ...result.data].length < 6) {
-                setCanLoadMore(false);
-                console.log("foo")
-            }
             setBooks(removeDuplicates([...books, ...result.data]));
+        } else if (result.isSuccess && !result.data) {
+            setCanLoadMore(false);
         }
+
         setLoading(false);
     }, [result]);
 
@@ -68,22 +78,47 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
             </Head>
             <main className={styles.main}>
                 <Slider/>
-                <section className={styles.books}>
-                    <Sidebar currentCategory={subject}/>
+                <section className={styles.contentWrapper}>
+                    <div className={styles.sidebarWrapper}>
+                        <Sidebar currentCategory={subject}/>
+                    </div>
+                    <div className={styles.books}>
+                        {books ? <Books books={[...data, ...books]}/> :
+                            <div className={styles.noContent}>No items found...</div>}
+                        {canLoadMore ?
+                            <div className={styles.btnWrapper}>
+                                <AnimatePresence>
+                                    {loading && <motion.div
+                                        initial={{ opacity: 0.5, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: "auto" }}
+                                        transition={{ duration: 0.5 }}
+                                    ><Loader/></motion.div>}
+                                </AnimatePresence>
+                                <AnimatePresence>
+                                    <motion.button
+                                        className={styles.btn}
+                                        style={{width: "100%"}}
+                                        onClick={handleLoadMore}
+                                        initial={{ opacity: 1 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        Load more
+                                    </motion.button>
+                                </AnimatePresence>
+                            </div>
+                            : <AnimatePresence><motion.div
+                                className={styles.btnWrapper}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >No more books in this category...</motion.div></AnimatePresence>
+                        }
+                    </div>
 
-                    {books ? <Books books={[...data, ...books]}/> : <div className={styles.noContent}>No items found...</div>}
-                    {canLoadMore ?
-                        <div className={styles.btnWrapper}>
-                            {loading && <Loader/>}
-                            <button
-                                className={styles.btn}
-                                style={{width: "100%"}}
-                                onClick={handleLoadMore}
-                            >Load more
-                            </button>
-                        </div>
-                        : <></>
-                    }
                 </section>
             </main>
         </>

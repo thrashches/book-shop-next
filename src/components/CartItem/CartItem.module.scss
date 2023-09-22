@@ -1,0 +1,28 @@
+@import "../Books/Books.module.scss";
+
+.CartItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.price {
+  color: var(--text-black, #1C2A39);
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.delivery {
+  color: #5C6A79;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

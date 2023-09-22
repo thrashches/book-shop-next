@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {IBook} from "@/data/types";
 
 
-interface ICartItem {
+export interface ICartItem {
     book: IBook,
     quantity: number,
 }
@@ -43,9 +43,17 @@ const profileSlice = createSlice({
         },
         addToCart(state, action) {
             state.cart.push(action.payload);
+        },
+        changeQuantity(state, action) {
+            const {book, quantity} = action.payload;
+            const index = state.cart.findIndex(cartItem => cartItem.book.id === book.id);
+            state.cart[index].quantity = quantity;
+            if (state.cart[index].quantity === 0) {
+                state.cart.splice(index, 1);
+            }
         }
     },
 })
 
 export default profileSlice.reducer;
-export const {setToken, setUser, setCart, addToCart} = profileSlice.actions;
+export const {setToken, setUser, setCart, addToCart, changeQuantity} = profileSlice.actions;

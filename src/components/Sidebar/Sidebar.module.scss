@@ -4,17 +4,19 @@
 
 .sidebar {
   @include flex-col;
+  width: 100%;
   align-items: center;
   padding: 45px;
   background: #efeef6;
-  width: 20%;
-  position: absolute;
+  position: sticky;
+  top: 16px;
   left: 0;
+  transition: transform 1s ease;
 }
-
 
 .sidebar__links {
   @include flex-col;
+  width: 100%;
   gap: 23px;
 }
 
@@ -28,7 +30,7 @@
 
   a {
     color: var(--text-gray, #5C6A79);
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
     font-style: normal;
     text-transform: capitalize;
   }
@@ -63,7 +65,6 @@
 
 @media (max-width: 1120px) {
   .sidebar {
-    width: 40%;
     padding: 15px;
     align-items: flex-start;
   }
@@ -72,7 +73,6 @@
 @media (max-width: 750px) {
   .sidebar {
     position: static;
-    width: 100%;
     align-items: center;
   }
 }

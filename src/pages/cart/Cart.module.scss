@@ -19,6 +19,7 @@
 .cart__table {
   margin: 20px 0;
   width: 100%;
+  border-spacing: 0 32px;
 
   thead > tr > th {
     color: var(--text-gray, #5C6A79);

@@ -1,8 +1,12 @@
 import styles from "./Navbar.module.scss";
 import Link from "next/link";
+import {useSelector} from "react-redux";
+import {RootState} from "@/store";
 
 
 export default function Navbar() {
+    const cart = useSelector((state: RootState) => state.profile.cart)
+
     return (
         <header>
             <nav className={styles.Navbar}>
@@ -27,7 +31,7 @@ export default function Navbar() {
                     <Link href={"/login"} className={styles.profile__btn + " " + styles.profile__btn__user}></Link>
                     <Link href={"#"} className={styles.profile__btn + " " + styles.profile__btn__search}></Link>
                     <Link href={"/cart"} className={styles.profile__btn + " " + styles.profile__btn__basket}>
-                        <div className={styles.basket__items} id="basketItems"></div>
+                        {cart.length>0 &&<div className={styles.basket__items} id="basketItems">{cart.length}</div>}
                     </Link>
                 </div>
             </nav>

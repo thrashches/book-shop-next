@@ -19,6 +19,15 @@ export const booksApi = createApi({
     }),
 });
 
+export type GetBooksBySubjectQueryResult = {
+    isSuccess: boolean;
+    data?: IBook[]; // Specify the type of the `data` property
+};
+
+export type GetBooksBySubjectQueryArgs = {
+    subject: string;
+    pageIndex: number;
+};
 export const {useGetBooksBySubjectQuery, useLazyGetBooksBySubjectQuery} = booksApi;
 
 // https://redux-toolkit.js.org/rtk-query/overview
