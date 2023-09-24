@@ -27,16 +27,27 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
     urlParams.append("pageIndex", "0");
     urlParams.append("maxResults", "6");
     const response = await fetch("https://www.googleapis.com/books/v1/volumes?" + urlParams.toString());
+
     const data: { items: IBook[] } = await response.json();
+    if (!data.items) {
+        return {
+            props: {
+                data: [],
+                subject: subject,
+                error: true,
+            }
+        }
+    }
     return {
         props: {
             data: removeDuplicates(data.items),
             subject: subject,
+            error: false,
         }
     }
 })
 
-export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
+export default function Home({data, subject, error}: InferGetServerSidePropsType<GetServerSideProps>) {
     const route = useRouter().asPath;
     const [nextPageIndex, setNextPageIndex] = useState(6);
     const [books, setBooks] = useState<IBook[]>([]);
