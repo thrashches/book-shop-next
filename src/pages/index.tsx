@@ -5,8 +5,7 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
 import {
-    booksApi,
-    GetBooksBySubjectQueryResult,
+    booksApi, GetBooksBySubjectQueryResult,
     useLazyGetBooksBySubjectQuery
 } from "@/api/booksApi";
 import React, {useEffect, useState} from "react";
@@ -17,6 +16,7 @@ import {removeDuplicates} from "@/data/utils";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {AnimatePresence, motion} from "framer-motion";
+import CategoryNavbar from "@/components/CategoryNavbar/CategoryNavbar";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -90,6 +90,7 @@ export default function Home({data, subject, error}: InferGetServerSidePropsType
             <main className={styles.main}>
                 <Slider/>
                 <section className={styles.contentWrapper}>
+                    <CategoryNavbar currentCategory={subject}/>
                     <div className={styles.sidebarWrapper}>
                         <Sidebar currentCategory={subject}/>
                     </div>
