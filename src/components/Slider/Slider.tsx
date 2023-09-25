@@ -4,6 +4,7 @@ import {motion} from "framer-motion";
 import First from "../../../public/slider/1.png";
 import Second from "../../../public/slider/2.png";
 import Third from "../../../public/slider/3.png";
+import Image from "next/image";
 
 const items = [
     First,
@@ -35,15 +36,49 @@ export default function Slider() {
         <section className={styles.Slider}>
             <div className={styles.Slider__container}>
                 <motion.div
-                    className={styles.Slider__img}
-                    style={{
-                        backgroundImage: `url(${items[index].src})`
-                    }}
-                    key={index}
-                    initial={{x: 300, opacity: 0}}
-                    animate={{x: 0, opacity: 1}}
-                    exit={{x: -300, opacity: 0}}
-                />
+                    // key={index}
+                    initial={{ x: 300, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -300, opacity: 0 }}
+                    transition={{ duration: 1 }}
+                >
+                    {items.map((item, i) => (
+                        <motion.div
+                            key={item.src}
+                            className={styles.Slider__img}
+                            style={{ display: index === i ? "block" : "none", transition: "opacity 1s ease" }}
+                            initial={{ x: 300, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: -300, opacity: 0 }}
+                            // transition={{ repeat: Infinity, repeatDelay: 3, repeatType: "reverse" }}
+                        >
+                            <Image src={item.src} alt="" fill loading={"eager"} />
+                        </motion.div>
+                    ))}
+                </motion.div>
+
+
+                {/*<motion.div*/}
+                {/*    className={styles.Slider__img}*/}
+                {/*    // style={{*/}
+                {/*    //     backgroundImage: `url(${items[index].src})`*/}
+                {/*    // }}*/}
+                {/*    key={index}*/}
+                {/*    initial={{x: 300, opacity: 0}}*/}
+                {/*    animate={{x: 0, opacity: 1}}*/}
+                {/*    exit={{x: -300, opacity: 0}}*/}
+                {/*    transition={{duration: 1}}*/}
+                {/*>*/}
+                {/*    {items.map((_, i) => (*/}
+                {/*        <Image*/}
+                {/*            key={i}*/}
+                {/*            src={items[i].src}*/}
+                {/*            alt=""*/}
+                {/*            fill*/}
+                {/*            loading={"eager"}*/}
+                {/*        />*/}
+                {/*    ))}*/}
+                {/*</motion.div>*/}
             </div>
 
             <div className={styles.Slider__controls}>
