@@ -260,6 +260,7 @@
 }
 
 .sidebarWrapper {
+  display: none;
   position: absolute;
   left: 0;
   width: 300px;
@@ -269,4 +270,10 @@
 .contentWrapper {
   position: relative;
   width: 100%;
+}
+
+@media (min-width: 992px) {
+  .sidebarWrapper {
+    display: block;
+  }
 }

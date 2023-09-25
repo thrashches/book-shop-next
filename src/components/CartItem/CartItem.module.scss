@@ -9,6 +9,7 @@
 }
 
 .price {
+  display: none;
   color: var(--text-black, #1C2A39);
   font-family: Montserrat, sans-serif;
   font-size: 18px;
@@ -19,6 +20,7 @@
 }
 
 .delivery {
+  display: none;
   color: #5C6A79;
   font-family: Montserrat, sans-serif;
   font-size: 12px;
@@ -26,3 +28,20 @@
   font-weight: 700;
   line-height: normal;
 }
+
+@media (max-width: 576px) {
+  .CartItem {
+    gap: 6px;
+    max-width: 75%;
+  }
+}
+
+@media (min-width: 576px) {
+  .price {
+    display: table-cell;
+  }
+  .delivery {
+    display: table-cell;
+  }
+}
+

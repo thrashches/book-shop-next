@@ -4,9 +4,15 @@
   @include container;
   padding: 16px 24px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 24px;
   justify-content: space-between;
+}
+
+@media (min-width: 992px) {
+  .Profile {
+    grid-template-columns: 2fr 1fr;
+  }
 }
 
 .Profile__header {
@@ -51,10 +57,17 @@
 
 .Profile__data {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
+}
+
+@media (min-width: 568px) {
+  .Profile__data {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }
 
 .dataGroup {

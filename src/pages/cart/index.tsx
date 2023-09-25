@@ -55,8 +55,8 @@ export default function Cart() {
                                     <tr>
                                         <th>Item</th>
                                         <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Delivery</th>
+                                        <th className={styles.headerLargeScreen}>Price</th>
+                                        <th className={styles.headerLargeScreen}>Delivery</th>
                                     </tr>
                                     </thead>
                                     <tbody>

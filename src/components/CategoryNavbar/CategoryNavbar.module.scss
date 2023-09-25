@@ -9,6 +9,12 @@
   background: #efeef6;
 }
 
+@media (min-width: 992px) {
+  .CategoryNavbar {
+      display: none;
+  }
+}
+
 .CategoryNavbar__controls {
   display: flex;
   flex-direction: row;

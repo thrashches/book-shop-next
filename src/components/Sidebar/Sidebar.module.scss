@@ -17,8 +17,10 @@
 
 .sidebar__links {
   @include flex-col;
+  align-items: center;
   width: 100%;
   gap: 23px;
+  overflow: hidden;
 }
 
 .sidebar__link {
