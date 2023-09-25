@@ -2,7 +2,7 @@
 
 .Slider {
   @include container;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -16,14 +16,17 @@
 
 
 .Slider__img {
-  width: 1120px;
-  height: 700px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  position: relative;
 }
 
 @media (min-width: 768px) {
   .Slider {
+    display: flex;
     width: 650px;
     height: 500px;
   }

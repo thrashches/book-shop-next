@@ -18,9 +18,9 @@ export default function CartItem(props: CartItemProps) {
     }
 
     return <motion.tr
-        initial={{ opacity: 1, height: "auto" }}
-        exit={{ opacity: 0, height: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{opacity: 1, height: "auto"}}
+        exit={{opacity: 0, height: 0}}
+        transition={{duration: 0.5}}
     >
         <td>
             <div className={styles.CartItem}>
@@ -44,7 +44,7 @@ export default function CartItem(props: CartItemProps) {
         </td>
         <td><NumberInput value={item.quantity} handleChange={handleItemQuantityChange}/></td>
         <td className={styles.price}>
-            {item.book.saleInfo.listPrice&&(item.book.saleInfo.listPrice?.amount * item.quantity).toString()} RUB
+            {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} RUB
         </td>
         <td className={styles.delivery}>Shipping: delivery</td>
     </motion.tr>
