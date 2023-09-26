@@ -2,6 +2,7 @@ import styles from "./Navbar.module.scss";
 import Link from "next/link";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store";
+import LoginPopup from "@/components/LoginPopup/LoginPopup";
 
 
 export default function Navbar() {
@@ -15,7 +16,8 @@ export default function Navbar() {
                 </div>
                 <div className={styles.Navbar__links}>
                     <div>
-                        <Link href="/" className={styles.Navbar__links__link + " " + styles.Navbar__links__link__active}> Books </Link>
+                        <Link href="/"
+                              className={styles.Navbar__links__link + " " + styles.Navbar__links__link__active}> Books </Link>
                     </div>
                     <div>
                         <a href="#" className={styles.Navbar__links__link}> Audiobooks </a>
@@ -28,10 +30,10 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className={styles.Navbar__profile}>
-                    <Link href={"/login"} className={styles.profile__btn + " " + styles.profile__btn__user}></Link>
+                    <LoginPopup/>
                     <Link href={"#"} className={styles.profile__btn + " " + styles.profile__btn__search}></Link>
                     <Link href={"/cart"} className={styles.profile__btn + " " + styles.profile__btn__basket}>
-                        {cart.length>0 &&<div className={styles.basket__items} id="basketItems">{cart.length}</div>}
+                        {cart.length > 0 && <div className={styles.basket__items} id="basketItems">{cart.length}</div>}
                     </Link>
                 </div>
             </nav>

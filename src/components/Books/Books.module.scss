@@ -35,10 +35,18 @@
 
 .book {
   @include d-flex;
+  flex-direction: column;
+  align-items: center;
   gap: 36px;
   z-index: 10;
   margin-top: 36px;
   justify-content: flex-end;
+}
+
+@media (min-width: 576px) {
+  .book {
+    flex-direction: row;
+  }
 }
 
 .book__poster {
@@ -106,6 +114,12 @@
   &__reviews {
     @include os-normal;
     text-transform: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .book__rating {
+    flex-direction: column;
   }
 }
 

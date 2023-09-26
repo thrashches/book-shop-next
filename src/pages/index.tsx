@@ -5,8 +5,7 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import Slider from "@/components/Slider/Slider";
 import Books from "@/components/Books/Books";
 import {
-    booksApi,
-    GetBooksBySubjectQueryResult,
+    booksApi, GetBooksBySubjectQueryResult,
     useLazyGetBooksBySubjectQuery
 } from "@/api/booksApi";
 import React, {useEffect, useState} from "react";
@@ -17,6 +16,7 @@ import {removeDuplicates} from "@/data/utils";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {AnimatePresence, motion} from "framer-motion";
+import CategoryNavbar from "@/components/CategoryNavbar/CategoryNavbar";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -27,16 +27,27 @@ export const getServerSideProps = (async (params: { query: { subject: string | n
     urlParams.append("pageIndex", "0");
     urlParams.append("maxResults", "6");
     const response = await fetch("https://www.googleapis.com/books/v1/volumes?" + urlParams.toString());
+
     const data: { items: IBook[] } = await response.json();
+    if (!data.items) {
+        return {
+            props: {
+                data: [],
+                subject: subject,
+                error: true,
+            }
+        }
+    }
     return {
         props: {
             data: removeDuplicates(data.items),
             subject: subject,
+            error: false,
         }
     }
 })
 
-export default function Home({data, subject}: InferGetServerSidePropsType<GetServerSideProps>) {
+export default function Home({data, subject, error}: InferGetServerSidePropsType<GetServerSideProps>) {
     const route = useRouter().asPath;
     const [nextPageIndex, setNextPageIndex] = useState(6);
     const [books, setBooks] = useState<IBook[]>([]);
@@ -79,6 +90,7 @@ export default function Home({data, subject}: InferGetServerSidePropsType<GetSer
             <main className={styles.main}>
                 <Slider/>
                 <section className={styles.contentWrapper}>
+                    <CategoryNavbar currentCategory={subject}/>
                     <div className={styles.sidebarWrapper}>
                         <Sidebar currentCategory={subject}/>
                     </div>

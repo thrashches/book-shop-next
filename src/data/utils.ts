@@ -13,6 +13,6 @@ export function removeDuplicates(books: IBook[]): IBook[] {
 
 export function getTotalPrice(items: ICartItem[]): number {
     return items.reduce(
-        (acc, item) => acc + item.book.saleInfo.listPrice!.amount * item.quantity, 0
+        (acc, item) => acc + item.book.saleInfo.listPrice!.amount * 100 * item.quantity / 100, 0
     );
 }

@@ -3,12 +3,26 @@ import {NextApiRequest, NextApiResponse} from "next";
 
 const validate = (email: string, password: string) => {
     if (!email || !password) {
-        return {error: true, message: 'Email or password are empty'};
+        const incorrectFields = [];
+        if (!email) {
+            incorrectFields.push('email');
+        }
+        if (!password) {
+            incorrectFields.push('password');
+        }
+        return {error: true, message: 'Email or password are empty', fields: incorrectFields};
     }
     const emailIsValid = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email);
     const passwordIsValid = password.length >= 8;
     if (!emailIsValid || !passwordIsValid) {
-        return {error: true, message: 'Email or password are incorrect'};
+        const incorrectFields = [];
+        if (!emailIsValid) {
+            incorrectFields.push('email');
+        }
+        if (!passwordIsValid) {
+            incorrectFields.push('password');
+        }
+        return {error: true, message: 'Email or password are incorrect', fields: incorrectFields};
     }
     return {error: false};
 }

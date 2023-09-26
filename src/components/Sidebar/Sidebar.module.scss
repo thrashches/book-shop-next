@@ -3,7 +3,8 @@
 @import "../../styles/typography.scss";
 
 .sidebar {
-  @include flex-col;
+  display: none;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   padding: 45px;
@@ -16,8 +17,10 @@
 
 .sidebar__links {
   @include flex-col;
+  align-items: center;
   width: 100%;
   gap: 23px;
+  overflow: hidden;
 }
 
 .sidebar__link {
@@ -70,9 +73,14 @@
   }
 }
 
+@media (min-width: 992px) {
+  .sidebar {
+      display: flex;
+  }
+}
+
 @media (max-width: 750px) {
   .sidebar {
-    position: static;
     align-items: center;
   }
 }

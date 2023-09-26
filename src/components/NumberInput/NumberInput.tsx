@@ -24,8 +24,8 @@ export default function NumberInput (props: NumberInputProps) {
     }
 
     return <div className={styles.NumberInput}>
-        <button onClick={handleMinus}><Image src={MinusIcon} alt={"-"} width={25} height={25}/></button>
+        <button onClick={handleMinus}><Image src={MinusIcon} alt={"-"} fill={true}/></button>
         <input type={"number"} value={value} onInput={handleInput}/>
-        <button onClick={handlePlus}><Image src={PlusIcon} alt={"+"} width={25} height={25}/></button>
+        <button onClick={handlePlus}><Image src={PlusIcon} alt={"+"} fill={true}/></button>
     </div>
 }

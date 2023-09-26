@@ -4,7 +4,45 @@
 
 .cart {
   @include container;
-  margin-top: 80px;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.headerLargeScreen {
+  display: none;
+}
+
+.row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 75% 25%;
+}
+
+@media (min-width: 576px) {
+  .cart {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .cart {
+    margin-top: 80px;
+    max-width: 720px;
+  }
+
+  .headerLargeScreen {
+    display: block;
+  }
+
+  .row {
+    grid-template-columns: 40% 20% 20% 20%;
+  }
+}
+
+@media (min-width: 992px) {
+  .cart {
+    max-width: 960px;
+  }
 }
 
 .cart__bigText {
@@ -17,11 +55,16 @@
 }
 
 .cart__table {
+  display: flex;
+  flex-direction: column;
+  //align-items: flex-start;
+  gap: 16px;
   margin: 20px 0;
   width: 100%;
   border-spacing: 0 32px;
+  word-wrap: break-word;
 
-  thead > tr > th {
+  &__header {
     color: var(--text-gray, #5C6A79);
     text-align: left;
     font-family: Montserrat, sans-serif;
@@ -44,6 +87,12 @@
 .btn {
   @include btn;
   padding: 18px 74px;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
+  }
 }
 
 .empty {
