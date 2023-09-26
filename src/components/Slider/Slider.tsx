@@ -33,6 +33,14 @@ export default function Slider() {
 
     return (
         <section className={styles.Slider}>
+            <div className={`${styles.banner} ${styles.banner__tr}`}>
+                <h4>Change old book on new</h4>
+                <button className={styles.arrow}></button>
+            </div>
+            <div className={`${styles.banner} ${styles.banner__br}`}>
+                <h4>top 100 books 2022</h4>
+                <button className={styles.arrow}></button>
+            </div>
             <div className={styles.Slider__container}>
                 <motion.div
                     className={styles.Slider__img}

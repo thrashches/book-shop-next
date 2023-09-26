@@ -3,6 +3,7 @@
 .Slider {
   @include container;
   display: none;
+  //position: relative;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -67,3 +68,59 @@
   }
 }
 
+.banner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  justify-content: flex-end;
+  padding: 20px;
+  box-shadow: 0 24px 36px rgba(53, 49, 84, 0.28);
+  z-index: 1;
+  transition: 250ms;
+
+  h4 {
+    word-wrap: normal;
+    word-spacing: 50px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &__tr {
+    @extend .banner;
+    right: 6%;
+    top: 15%;
+    width: 150px;
+    height: 200px;
+    background: #9e98dc;
+  }
+
+  &__br {
+    @extend .banner;
+    right: 0;
+    top: 500px;
+    width: 150px;
+    height: 200px;
+    background: #ff8fe6;
+  }
+}
+
+@media (max-width: 992px) {
+  .banner {
+    display: none;
+  }
+}
+
+.arrow {
+  all: unset;
+  content: " ";
+  width: 55px;
+  height: 12px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-image: url("../../../public/img/svg/arrow.svg");
+}
