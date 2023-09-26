@@ -46,12 +46,12 @@ export default function CartItem(props: CartItemProps) {
         <div className={styles.quantity}>
             <NumberInput value={item.quantity} handleChange={handleItemQuantityChange}/>
             <div className={`${styles.price} ${styles.price__small}`}>
-                {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} RUB
+                {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} {item.book.saleInfo.listPrice?.currencyCode}
             </div>
             <div className={`${styles.delivery} ${styles.delivery__small}`}>Shipping: delivery</div>
         </div>
         <div className={styles.price}>
-            {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} RUB
+            {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} {item.book.saleInfo.listPrice?.currencyCode}
         </div>
         <div className={styles.delivery}>Shipping: delivery</div>
     </motion.div>

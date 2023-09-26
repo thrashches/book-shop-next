@@ -72,7 +72,7 @@ export default function Cart() {
                                 </div>
                             </div>
                             <div className={styles.cart__footer}>
-                                <p className={styles.cart__bigText}>TOTAL PRICE: {getTotalPrice(items)} RUB</p>
+                                <p className={styles.cart__bigText}>TOTAL PRICE: {getTotalPrice(items)} {items[0].book.saleInfo.listPrice?.currencyCode}</p>
                                 <button className={styles.btn}>Checkout</button>
                             </div>
                         </motion.div>
