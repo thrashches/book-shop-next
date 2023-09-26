@@ -50,23 +50,26 @@ export default function Cart() {
                             transition={{ duration: 0.5 }}
                         >
                             <div>
-                                <table className={styles.cart__table}>
-                                    <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th className={styles.headerLargeScreen}>Price</th>
-                                        <th className={styles.headerLargeScreen}>Delivery</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                <div className={styles.cart__table}>
+
+                                    <div className={styles.row}>
+                                        <div className={styles.cart__table__header}>Item</div>
+                                        <div className={styles.cart__table__header}>Quantity</div>
+                                        <div className={`${styles.cart__table__header} ${styles.headerLargeScreen}`}>
+                                            Price
+                                        </div>
+                                        <div className={`${styles.cart__table__header} ${styles.headerLargeScreen}`}>
+                                            Delivery
+                                        </div>
+                                    </div>
+
                                     <AnimatePresence>
                                         {items.map((item, index) => (
                                             <CartItem key={index} item={item} handleQuantityChange={handleQuantityChange}/>
                                         ))}
                                     </AnimatePresence>
-                                    </tbody>
-                                </table>
+
+                                </div>
                             </div>
                             <div className={styles.cart__footer}>
                                 <p className={styles.cart__bigText}>TOTAL PRICE: {getTotalPrice(items)} RUB</p>

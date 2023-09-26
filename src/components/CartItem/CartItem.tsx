@@ -17,18 +17,19 @@ export default function CartItem(props: CartItemProps) {
         handleQuantityChange(item, value);
     }
 
-    return <motion.tr
+    return <motion.div
+        className={styles.row}
         initial={{opacity: 1, height: "auto"}}
         exit={{opacity: 0, height: 0}}
         transition={{duration: 0.5}}
     >
-        <td>
+        <div>
             <div className={styles.CartItem}>
                 <div className={styles.book__poster}>
                     <Image src={item.book.volumeInfo.imageLinks.thumbnail} alt={item.book.volumeInfo.title}
                            width={100} height={140}/>
                 </div>
-                <div className={styles.book__details}>
+                <div className={styles.book__details} style={{paddingLeft: 8, paddingRight: 8}}>
 
                     <div className={styles.book__title}>{item.book.volumeInfo.title}</div>
                     <div className={styles.book__author}>{item.book.volumeInfo.authors}</div>
@@ -41,11 +42,17 @@ export default function CartItem(props: CartItemProps) {
                     </div>
                 </div>
             </div>
-        </td>
-        <td><NumberInput value={item.quantity} handleChange={handleItemQuantityChange}/></td>
-        <td className={styles.price}>
+        </div>
+        <div className={styles.quantity}>
+            <NumberInput value={item.quantity} handleChange={handleItemQuantityChange}/>
+            <div className={`${styles.price} ${styles.price__small}`}>
+                {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} RUB
+            </div>
+            <div className={`${styles.delivery} ${styles.delivery__small}`}>Shipping: delivery</div>
+        </div>
+        <div className={styles.price}>
             {item.book.saleInfo.listPrice && (item.book.saleInfo.listPrice?.amount * 100 * item.quantity / 100).toString()} RUB
-        </td>
-        <td className={styles.delivery}>Shipping: delivery</td>
-    </motion.tr>
+        </div>
+        <div className={styles.delivery}>Shipping: delivery</div>
+    </motion.div>
 }

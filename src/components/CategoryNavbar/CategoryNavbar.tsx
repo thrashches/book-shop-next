@@ -35,8 +35,8 @@ export default function CategoryNavbar(props: CategoryNavbarProps) {
         <div className={styles.CategoryNavbar__controls}>
             <button onClick={() => setShowNav(!showNav)}>
                 {showNav ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                    <line x1="2" y1="2" x2="22" y2="22" stroke="#4C3DB2" stroke-width="2"/>
-                    <line x1="2" y1="22" x2="22" y2="2" stroke="#4C3DB2" stroke-width="2"/>
+                    <line x1="2" y1="2" x2="22" y2="22" stroke="#4C3DB2" strokeWidth="2"/>
+                    <line x1="2" y1="22" x2="22" y2="2" stroke="#4C3DB2" strokeWidth="2"/>
                 </svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 6H21" stroke="#4C3DB2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M3 12H21" stroke="#4C3DB2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
